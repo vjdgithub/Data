@@ -418,6 +418,96 @@ docker rm -f $(docker ps -aq)
 ------------
 class 9 :
 -----------
+Access the container in detached mode (-d)
+
+dangling images - images in the machine without a container attached
+
+to remove the dangling images command is 
+docker system prune
+docker system prune --all
+
+docker system prune --images [to remove only images]
+
+to inspect if there are any containers attached the command is
+
+docker inspect <imagename>
+
+to create nginx image with a name in a detached mode
+
+docket run --name web -d nginx
+
+you can acces the detached container i.e. web containers from the host machine and out side of host machine also i.e via internet
+
+to access the container from the host machine and execute a command as   
+
+docker exce  -it<for attachment> <containername> <command>
+
+docker exec -it web /bin/bash
+
+by default nginx container comes with application
+
+ cd usr/share/nginx
+ ls
+ cd html
+ there is default index page
+when i exit i am out of the process and container is still running
+
+to acceess that applicaion we need use concept of port mapping/port forwarding
+
+every we container will have a port number attached with it
+
+** port mapping needs to done at the docker run command itself
+
+---in docker once the container is created we can not do port mapping but in kubernatics we can do 
+
+docker run --name web2 -d -p 9090:80 nginx
+
+or let docker decide the port number
+
+docker run --name web3 -d -P(CAPITAL P) nginx
+docker run --name web3 -d -P nginx
+
+---when even when docker is installed by default docker creates its own network as Docker zero network (type bridge) it has a default sub net range and the container get ip addresses of that sub net range
+
+--we can not access the container via ip but can ccess by mapped port number
+
+-- docker that container is created in production environment via archestration tool will have port number in the range of 30000 to 32767
+
+to know the network
+
+docker network ls 
+
+-------
+
+customize the container and convert in to a image
+
+come out of the container CTL + p
+
+
+
+docker commit basecont myimage01
+
+docker login 
+
+docker push image01 - access denied as you are pushing to docker hub library
+
+hence change the image name as 
+
+docker tag <OldImageName> <DockerAccountId/NewImageName> 
+
+docker tag myimage01 vjddocker/myiamge01
+docker push vjddocker/myiamge01
+
+recent interview questions :
+
+what are dangling images 
+how to push docker into a aws private registry - vedio recording is there
+difference between docker stocp and kill command 
+
+
+
+
+
 
 
 
