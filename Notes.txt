@@ -504,6 +504,179 @@ what are dangling images
 how to push docker into a aws private registry - vedio recording is there
 difference between docker stocp and kill command 
 
+-----
+Class 10
+-----
+
+before writing a docker file plan first waht you need in container
+
+by default Run commands run in the root directory otherwise you can choose
+
+What is the difference between Copy and Add keyworks
+
+docker build . (. means current directory-> build command allways searches for dockerfile) other specify the path as below
+docker build -p /path/file
+
+if  we want to tag the image as below
+
+docker build -t myimage01:tag .
+
+--image is a collection of binary files . these set of images together consistitues final image
+-- docker at commits images one by one -- commit is what  uses in the background and what ever activities what docker is using to build your final image is docker cache
+
+docker build -t myimage01:tag . 
+
+in one directory only one docker file should be there
+you need not give the name of the dockerfile as the file name is always dockerfile
+by default docker docker doesnot validate the dockerfile . errors come runtime. however there is one dockerfile linter and you can validate the dockerfile
+
+docker history <imagename>/<imageid>
+
+when we delete an image iamge layers shown in the docker history will be be deleted but not docker cache. if you wanrt to delete the docker cache you need to use below caommand
+
+docker system prune --all
+
+Difference between CMD and ENTRYPOINT Keywords
+
+both will execute after the instance is launched
+
+between CMD and ENTRYPOINT --> ENTRYPOINT gets precedence - it is the final command
+
+In the dockerfile if the developer mentions only CMD that means the the docker developer is giving an oppertunity to the another deveoper who is running the image to pass a new command at run time. so when i run the busybox image if i dont want default to be "sh" and if i want some other command to be given at runtime after the container is launched a below
+
+actual busybox dockerfile is 
+
+FROM scratch
+ADD busybox.tar.xz /
+CMD ["sh"]
+
+docker run -d busybox sleep 6000
+
+above "sh" command is replaced with "sleep 6000" at run time
+
+if it is placed in at entry point then that command can not be replaced by entrypoint command. but when we pass new command at run time when docker file using entrypoint, the newly given command at run time is just gets appended to the entry point command.
+
+docker run -d nginx slep 6000 
+
+how to create multi stage Build dockerfile - home work
+
+------
+Class 11
+------
+
+Deploy a node js application using image node from
+
+https://github.com/Sonal0409/nodejsappDockerfile.git
+
+we can not do port mapping in the dockerfile . while creating container only we need to port mapping
+
+docker system prune --all
+docker rm -f $(docker ps -aq)
+
+clone the above repo and go inside the repo, remove all the existing images and processes and then do the following
+
+docker build -t mynodeapp .
+
+docker run -d -P mynodeapp
+
+docker ps -a
+
+press enter to execute the command
+press CTL + C - to dont run and come out
+
+on our server does not have root permissions to run docker command
+
+got to /etc/sudoers file, inside this file go to root section and give jenkins user nopassword permission as below
+
+jenkins ALL=NOPASSWD: ALL
+
+or you can run a command to give permission to run docker by any user as below
+
+chmod 777 /var/run/docker.sock 
+
+pipeline {
+    
+    tools {maven 'mymaven'}
+    
+    agent any 
+    
+    stages {
+        
+        stage ('Clone Repo') {
+            
+            steps {
+                git 'https://github.com/vjdgithub/DevOpsCodeDemo.git'
+            }
+            
+        }
+        
+        stage ('Compile Code') {
+            
+            steps {
+                sh 'mvn compile'
+            }
+            
+        }
+        
+        stage ('Review Code') {
+            
+            steps {
+                sh 'mvn pmd:pmd'
+            }
+            
+        }
+        
+        stage ('Test Code') {
+            
+            steps {
+                sh 'mvn test'
+            }
+            
+        }
+        
+        stage ('Package Code') {
+            
+            steps {
+                sh 'mvn clean install package'
+            }
+            
+        }
+        
+        stage ('Copy the War file from target directory to current diroctory') {
+            
+            steps {
+                sh 'cp /var/lib/jenkins/workspace/CICDpipeline/target/addressbook.war .'
+            }
+            
+        }
+        stage ('Build Image') {
+            
+            steps {
+                sh 'docker build -t myappjenkins .'
+            }
+            
+        }
+        stage ('Deploy the Image') {
+            
+            steps {
+                sh 'docker run -d -P myappjenkins'
+            }
+            
+        }
+        
+    }
+}
+
+for java application deployed in tomcat access the appliacation appended with war file name as below
+
+http://18.223.171.192:32769/addressbook
+
+------
+
+
+
+
+
 
 
 
