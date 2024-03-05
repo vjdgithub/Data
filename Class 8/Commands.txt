@@ -1,0 +1,178 @@
+1  clear
+    2  yum install git -y
+    3  clear
+    4  git --version
+    5  exit
+    6  clear
+    7  sudo amazon-linux-extras install java-openjdk11 -y
+    8  clear
+    9  sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+   10  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+   11  yum install jenkins -y
+   12  systemctl start jenkins
+   13  systemctl status jenkins
+   14  clear
+   15  cat /var/lib/jenkins/secrets/initialAdminPassword
+   16  exit
+   17  ls
+   18  cd myproject
+   19  cd myproject1
+   20  clear
+   21  ls -la
+   22  clear
+   23  git remote add origin1 git@github.com:vjdgithub/MynNewRepo1.git
+   24  git pull origin1
+   25  ls
+   26  ls -la
+   27  git remote add origin1 git@github.com:vjdgithub/MyNewRepo2.git
+   28  git remote add origin2 git@github.com:vjdgithub/MyNewRepo2.git
+   29  ls
+   30  ls -la
+   31  touch file{1..2}
+   32  ls
+   33  git add.
+   34  git add .
+   35  git commit -m "done"
+   36  git status
+   37  git push origin2 master
+   38  clear
+   39  pwd
+   40  ls
+   41  mkdir sample-project
+   42  ls
+   43  pwd
+   44  cd sample-project
+   45  ls
+   46  clear
+   47  hostname
+   48  cd sample-project
+   49  pwd
+   50  clear
+   51  exit
+   52  cls
+   53  ls
+   54  cd sample-project
+   55  ls
+   56  clear
+   57  cp /home/ec2-user/sample-project/* /root/sample-project
+   58  cp /home/ec2-user/sample-project/ /root/sample-project
+   59  clear
+   60  cp -r /home/ec2-user/sample-project/* /root/sample-project
+   61  ls
+   62  cd sample-project
+   63  ls
+   64  clear
+   65  git version
+   66  java version
+   67  java --version
+   68  jenkins version
+   69  clear
+   70  exit
+   71  clear
+   72  cd /var/lib/jenkins/workspace/
+   73  ls
+   74  cd ..
+   75  cs ..
+   76  cd ..
+   77  cd /var/lib/jenkins/workspace/
+   78  git status
+   79  git log
+   80  cd CloneRepo
+   81  git status
+   82  cd ..
+   83  cd /var/lib/jenkins/workspace/
+   84  cd CloneReop
+   85  cd CloneRepo
+   86  ls
+   87  clear
+   88  systemctl start jenkins
+   89  sytemctl start jenkins
+   90  systemctl start jenkins
+   91  clear
+   92  cd /var/lib/jenkins
+   93  ls
+   94  car hudson.tasks.Maven.xml
+   95  cat hudson.tasks.Maven.xml
+   96  clear
+   97  systemctl start jenkins
+   98  clear
+   99  systemctl start jenkins
+  100  cleear
+  101  clear
+  102  systemctl start jenkins
+  103  mkdir sudo su -
+  104  ls
+  105  rm -rf su
+  106  rm -rf sudo
+  107  mkdir mergeconflict
+  108  cd mergeconflict
+  109  git clone https://github.com/vjdgithub/sample-project.git
+  110  clear
+  111  cd sample-project
+  112  git status
+  113  git branch branch1
+  114  git checkout branch1
+  115  git branch
+  116  hostname developer1
+  117  ls -la
+  118  sudo su -
+  119  clear
+  120  git branch
+  121  cd mergeconflict
+  122  cd sample-project
+  123  git branch
+  124  clear
+  125  ls
+  126  nano index.htm
+  127  git status
+  128  clear
+  129  ls
+  130  rm -rf index.htm
+  131  ls
+  132  clear
+  133  nano index.html
+  134  git status
+  135  clear
+  136  git merge branch1 master
+  137  git branch
+  138  git status
+  139  clear
+  140  git add .
+  141  git commit -m "added branch 1 changes"
+  142  git config --global user.email "jagadeeshwork2021@gmail.com"
+  143  git config --global user.name "vjdgithub"
+  144  clear
+  145  git commit -m "added branch 1 changes"
+  146  git status
+  147  git branch
+  148  git merge branch1 master
+  149  git checkout master
+  150  ls
+  151  nano index.html
+  152  git log
+  153  clear
+  154  git branch
+  155  git checkout branch1
+  156  ls
+  157  cat index.html
+  158  clear
+  159  git checkout master
+  160  ls
+  161  cat index.html
+  162  clear
+  163  git merge branch1 master
+  164  git remote add origin https://github.com/vjdgithub/sample-project.git
+  165  git remote -v
+  166  git push origin master
+  167  systemctl start jekins
+  168  systemctl start jenkins
+  169  claim
+  170  clear
+  171  docker run --name cont2 -it ubuntu
+  172  docker ps -a
+  173  docker attach cont2
+  174  docker ps -a
+  175  docker start cont2
+  176  docker stop cont2
+  177  docker ps
+  178  history

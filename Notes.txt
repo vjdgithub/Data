@@ -1,0 +1,417 @@
+Class 5 :
+
+A pipline is a set of jobs which are executed one after another
+
+sytemctl start jenkins
+
+*****
+
+http://18.118.10.14:8080/github-webhook/
+http://Jenkins-url/github-webhook/
+
+--------------------------------------------------------------------
+
+Class 6:
+
+1)core build plugins 2) report plugins
+
+pmd - programming mistake detector
+
+sample java project : 
+1) https://github.com/Sonal0409/DevOpsCodeDemo.git
+2) https://github.com/Sonal0409/JavaWebCalculator (incomple pom file)
+3) https://github.com/Sonal0409/calcwebapp-sonar.git
+
+pom file consists of 
+1)dependicies 
+
+2)plugins 
+
+2)repositorys - are registries from which maven will download the plug in or dependecies
+
+for graddel - build.xml 
+for maven pom.xml
+
+manage jenkins - setup maven ny using jenkins
+
+cd --> /var/lib/jenkins   -> hudson.tasks.Maven.xml
+
+1) package 
+
+maven commands are case sensitive
+
+-----------
+
+pipeline {
+    
+    tools {
+        maven 'mymaven'
+    }
+    
+    //here any means execute the pipline on any of the available servers i.e. current VM for now
+    agent any
+    
+    stages {
+        
+        stage ('Clone Repo') {
+            
+            steps {
+                git 'https://github.com/vjdgithub/DevOpsCodeDemo.git'
+            }
+            
+        }
+        
+        stage ('Compile Code') {
+            
+            steps {
+                sh 'mvn compile'
+            }
+            
+        }
+        
+        stage ('Test Code') {
+            
+            steps {
+                sh 'mvn test'
+            }
+            
+        }
+        
+        stage ('Package Code') {
+            
+            steps {
+                sh 'mvn package'
+            }
+            
+        }
+    }
+    
+}
+
+-------------------------------------------------------------
+
+Class 7:
+
+for review 
+
+stage ('Review Code') {
+            
+            steps {
+                sh 'mvn pmd:pmd'
+            }
+            
+        }
+
+gives pmd.xml  -  all the development mistakes will be here
+
+for coverage - based on the test cases how much code is covered for testeing - jacoco plug in
+
+repository to support cove coverage
+
+https://github.com/vjdgithub/calcwebapp-sonar.git
+
+code coverage is a process in which we generate a report using code coverage tool (ie. jacoco or cobertura etc..) against compiled classes and test cases which helps us to determine which part of java programme has been tetsted and which part lacks testing
+
+code coverage report will be generatd 
+
+unit testing - developer
+
+and testing team - selenium, Cypress and jasmine testing tools for testers   
+integration testing - 
+
+performnce testing Jmeter, load runner to write the test cases
+
+all of the above integrated with jenkins
+
+link for .net project - https://github.com/vjdgithub/MSbuildProject.git
+
+https://github.com/vjdgithub/DevOps_ClassNotes/blob/master/JENKINS/MSBuildJenkins.docx
+ 
+parameters are variable which can store values, Dev , Prod - we can choose ad based on parameter i can execute the stage 
+
+boolean or choice parameter
+
+parameters are declared in the parameters section and used in stages for conditions
+
+concept of backing up the jenkins server - s3 bucket
+
+triggers in a pipeline
+
+https://github.com/vjdgithub/DevOps_ClassNotes/blob/master/JENKINS/Triggers_PIPELINE
+
+pipeline {
+    
+    tools {
+        
+        maven 'mymaven'
+    }
+    
+    agent any
+    
+    //parameter that stores set of values --> parameter type = choice
+    // default value will be given for choice
+    parameters {
+        
+        choice(name: "ENV", choices: ["", "Dev", "QA"])
+    }
+    
+    stages {
+        
+        stage("Build in Dev Env"){
+            
+            when { expression {params.ENV == "Dev"}}
+            steps{
+                
+               git 'https://github.com/vjdgithub/DevOpsCodeDemo.git'
+               sh 'mvn pmd:pmd'
+               sh 'mvn package'
+            }
+            
+        }
+        
+        stage("Build in QA Env"){
+            
+            when { expression {params.ENV == "QA"}}
+            steps{
+                
+               git 'https://github.com/vjdgithub/DevOpsCodeDemo.git'
+               sh 'mvn test'
+               sh 'mvn package'
+            }
+            
+        }
+    }
+    
+}
+
+Slave Set up :
+---------------
+yum install git -y
+sudo amazon-linux-extras install java-openjdk11 -y
+go to tmp folder create jenkins directory
+cd /tmp
+mkdir jenkinsdir
+give jenkinsdir with read and write permissions
+chmod -R 777 /tmp/jenkinsdir
+
+change the name of the machine to JenkinsAgent
+
+hostname JenkinsAgent
+sudo su -
+
+Agent should be enabled to Random in Manage Jenkins/Security
+
+configure the agents to the master
+ manual setup via nodes or on the cloud automatically
+no use manual setup in using nodes in configuration 
+
+labels are used for selecting the desired VM on the linux
+
+use it to build the jobs on maching lable expressions
+
+host address is private ip as both the instances are in the same network
+
+
+--jfrog artifactory conncet using ssh and deply artifacts
+
+all the jobs run on any node labled 'linux_node'
+
+pipeline {
+    
+    tools {
+        maven 'mymaven'
+    }
+    
+    //here any means execute the pipline on any of the available servers i.e. current VM for now
+    agent { label 'linux_node'  }
+    
+    stages {
+        
+        stage ('Clone Repo') {
+            
+            steps {
+                git 'https://github.com/vjdgithub/DevOpsCodeDemo.git'
+            }
+            
+        }
+        
+        stage ('Compile Code') {
+            
+            steps {
+                sh 'mvn compile'
+            }
+            
+        }
+        
+        stage ('Review Code') {
+            
+            steps {
+                sh 'mvn pmd:pmd'
+            }
+            
+        }
+        
+        stage ('Test Code') {
+            
+            steps {
+                sh 'mvn test'
+            }
+            
+        }
+        
+        stage ('Package Code') {
+            
+            steps {
+                sh 'mvn package'
+            }
+            
+        }
+    }
+    
+}
+
+One job on Master server and one job on the any node labled 'linux_node'
+
+pipeline {
+    
+    tools {
+        
+        maven 'mymaven'
+    }
+    
+    agent none
+    
+    //parameter that stores set of values --> parameter type = choice
+    // default value will be given for choice
+    parameters {
+        
+        choice(name: "ENV", choices: ["", "Dev", "QA"])
+    }
+    
+    stages {
+        
+        stage("Build in Dev Env"){
+            
+            agent { label 'linux_node'  }
+            
+            when { expression {params.ENV == "Dev"}}
+            steps{
+                
+               git 'https://github.com/vjdgithub/DevOpsCodeDemo.git'
+               sh 'mvn pmd:pmd'
+               sh 'mvn package'
+            }
+            
+        }
+        
+        stage("Build in QA Env"){
+            
+            agent any
+            
+            when { expression {params.ENV == "QA"}}
+            steps{
+                
+               git 'https://github.com/vjdgithub/DevOpsCodeDemo.git'
+               sh 'mvn test'
+               sh 'mvn package'
+            }
+            
+        }
+    }
+    
+}
+
+//how to set up windos slave
+
+https://github.com/vjdgithub/DevOps_ClassNotes/blob/master/JENKINS/MVNJENKINS_NOTES.txt
+
+----------
+Class 8 :
+
+Dockerhub - it is a online open source repository where Docker places its images which is binary file
+
+yum install docker -y
+
+systectl start docker
+
+docker info
+
+private registries are maintained by docker administrator
+
+Registry - a location to maintain binary file
+Repository - a location to maintain source code
+
+//to check the images
+docker images
+
+docker pull ubantu
+
+//to check the all the container
+docker ps -a 
+
+//to check the running container
+docker ps 
+
+docker login -u <your-username>
+
+docker login -u vjddocker 
+
+You may need to use a specific registry version, for me this worked.
+docker login registry-1.docker.io/v1
+
+Ansible docker is primarly only for linux
+
+for pulling no need of username and pwd but for pushing it requires
+
+tags are different versions of the images
+
+an image is built by using editable docker file when ever you build a new image new version of the image is introduced that is called a s tag. 
+
+//to pull specific version
+docker pull imagename:tagname
+
+//for pulling puclic images you do not need credentials
+docker pull sonal04/base01 
+
+ docker run ubuntu
+
+when we run image again every time new container will come
+
+docker run is a dual command - first check if image is avaiable locally or not otherwise get it will pull and create the container
+//ceate a container with name
+docker run --name <containerName> imageName
+docker run --name cont1 ubuntu
+
+//for user to be attached to the container in foreground mode use -it
+docker run --name cont2 -it ubuntu
+
+container id and name are unique
+
+//to know the os 
+cat /etc/os-release
+
+--you can not run docker commands on the container -- docker wont install in container
+
+--come out of the container and keep the container running
+CTL pq
+
+---to attach to the container again - you can attach only to a running container
+docker attach containername
+
+--when we exit we come out of the container and container exited
+-- we can start containers again only which are created in forground mode
+docker start containername
+-- to stop the container
+docker stop containername
+
+-- you can not run windows container on linux and vice versa
+
+- for every service it is a micro service i.e. your application is running independent of the others
+- for ecommerce application you will create may services i.e. containers
+
+---
+to delete the container
+docker rm -f <containername?
+---to delete all  the containers
+docker rm -f $(docker ps -aq)
+

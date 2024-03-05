@@ -1,0 +1,36 @@
+https://github.com/Sonal0409/DevOpsBatch-Morning-12Feb
+
+1) how can i create file with space using touch command?
+
+every project folder will hhave one loaca repository (.git folderr using git init command
+
+1) git init
+2) git status
+3) git add 
+4) git commit -m "<>" <file name for single file otherwise leave blank for al - optional>
+5) git add ., git add .*html
+6) git commit - m "<>"
+7) git ls -files
+8) git log
+9) git log --oneline
+10) git show <7 digit commit id>
+
+git hub name and git hub email
+
+11) git config --global  user.name ""
+
+12) git config --global  user.email ""
+
+11) git config --local  user.name ""
+
+12) git config --local  user.email ""
+
+13) git config --list
+
+
+
+
+
+
+
+

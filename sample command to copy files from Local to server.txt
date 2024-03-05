@@ -1,0 +1,20 @@
+//sample command to copy files from downloads folder to ec2-user directory
+
+scp -i /Users/me/documents/myKP.pem -r /Users/me/desktop/testDir \ec2-user@ec2-11-111-11-11.compute-1.amazonaws.com:/home/ec2-user/remoteDir
+
+//my ec2 instance connection url
+ssh -i "19Feb.pem" ec2-user@ec2-52-14-53-64.us-east-2.compute.amazonaws.com
+
+//customized url to copy from my machine to my Ec2 instance
+scp -i "19Feb.pem" -r C:\Users\SAHITYA\Downloads\sample-project \ ec2-user@ec2-52-14-53-64.us-east-2.compute.amazonaws.com:/home/ec2-user/test
+
+
+//for renaming test folder 
+
+mv test sample-project
+
+// move to root user and copy files from home to root directory
+
+cp /home/ec2-user/sample-project/* /root/sample-project
+
+cp -r /home/ec2-user/sample-project/* /root/sample-project
