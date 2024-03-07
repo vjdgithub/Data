@@ -1,1 +1,5 @@
 https://github.com/Sonal0409/DevOpsBatch-Morning-12Feb/tree/main
+
+https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/Git-pull-vs-fetch-Whats-the-difference#:~:text=The%20key%20difference%20between%20git,git%20pull%20command%20does%20both.
+
+https://www.youtube.com/watch?v=CRlGDDprdOQ
