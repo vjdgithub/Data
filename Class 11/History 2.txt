@@ -1,0 +1,405 @@
+ 1  clear
+    2  yum install git -y
+    3  clear
+    4  git --version
+    5  exit
+    6  clear
+    7  sudo amazon-linux-extras install java-openjdk11 -y
+    8  clear
+    9  sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+   10  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+   11  yum install jenkins -y
+   12  systemctl start jenkins
+   13  systemctl status jenkins
+   14  clear
+   15  cat /var/lib/jenkins/secrets/initialAdminPassword
+   16  exit
+   17  ls
+   18  cd myproject
+   19  cd myproject1
+   20  clear
+   21  ls -la
+   22  clear
+   23  git remote add origin1 git@github.com:vjdgithub/MynNewRepo1.git
+   24  git pull origin1
+   25  ls
+   26  ls -la
+   27  git remote add origin1 git@github.com:vjdgithub/MyNewRepo2.git
+   28  git remote add origin2 git@github.com:vjdgithub/MyNewRepo2.git
+   29  ls
+   30  ls -la
+   31  touch file{1..2}
+   32  ls
+   33  git add.
+   34  git add .
+   35  git commit -m "done"
+   36  git status
+   37  git push origin2 master
+   38  clear
+   39  pwd
+   40  ls
+   41  mkdir sample-project
+   42  ls
+   43  pwd
+   44  cd sample-project
+   45  ls
+   46  clear
+   47  hostname
+   48  cd sample-project
+   49  pwd
+   50  clear
+   51  exit
+   52  cls
+   53  ls
+   54  cd sample-project
+   55  ls
+   56  clear
+   57  cp /home/ec2-user/sample-project/* /root/sample-project
+   58  cp /home/ec2-user/sample-project/ /root/sample-project
+   59  clear
+   60  cp -r /home/ec2-user/sample-project/* /root/sample-project
+   61  ls
+   62  cd sample-project
+   63  ls
+   64  clear
+   65  git version
+   66  java version
+   67  java --version
+   68  jenkins version
+   69  clear
+   70  exit
+   71  clear
+   72  cd /var/lib/jenkins/workspace/
+   73  ls
+   74  cd ..
+   75  cs ..
+   76  cd ..
+   77  cd /var/lib/jenkins/workspace/
+   78  git status
+   79  git log
+   80  cd CloneRepo
+   81  git status
+   82  cd ..
+   83  cd /var/lib/jenkins/workspace/
+   84  cd CloneReop
+   85  cd CloneRepo
+   86  ls
+   87  clear
+   88  systemctl start jenkins
+   89  sytemctl start jenkins
+   90  systemctl start jenkins
+   91  clear
+   92  cd /var/lib/jenkins
+   93  ls
+   94  car hudson.tasks.Maven.xml
+   95  cat hudson.tasks.Maven.xml
+   96  clear
+   97  systemctl start jenkins
+   98  clear
+   99  systemctl start jenkins
+  100  cleear
+  101  clear
+  102  systemctl start jenkins
+  103  mkdir sudo su -
+  104  ls
+  105  rm -rf su
+  106  rm -rf sudo
+  107  mkdir mergeconflict
+  108  cd mergeconflict
+  109  git clone https://github.com/vjdgithub/sample-project.git
+  110  clear
+  111  cd sample-project
+  112  git status
+  113  git branch branch1
+  114  git checkout branch1
+  115  git branch
+  116  hostname developer1
+  117  ls -la
+  118  sudo su -
+  119  clear
+  120  git branch
+  121  cd mergeconflict
+  122  cd sample-project
+  123  git branch
+  124  clear
+  125  ls
+  126  nano index.htm
+  127  git status
+  128  clear
+  129  ls
+  130  rm -rf index.htm
+  131  ls
+  132  clear
+  133  nano index.html
+  134  git status
+  135  clear
+  136  git merge branch1 master
+  137  git branch
+  138  git status
+  139  clear
+  140  git add .
+  141  git commit -m "added branch 1 changes"
+  142  git config --global user.email "jagadeeshwork2021@gmail.com"
+  143  git config --global user.name "vjdgithub"
+  144  clear
+  145  git commit -m "added branch 1 changes"
+  146  git status
+  147  git branch
+  148  git merge branch1 master
+  149  git checkout master
+  150  ls
+  151  nano index.html
+  152  git log
+  153  clear
+  154  git branch
+  155  git checkout branch1
+  156  ls
+  157  cat index.html
+  158  clear
+  159  git checkout master
+  160  ls
+  161  cat index.html
+  162  clear
+  163  git merge branch1 master
+  164  git remote add origin https://github.com/vjdgithub/sample-project.git
+  165  git remote -v
+  166  git push origin master
+  167  systemctl start jekins
+  168  systemctl start jenkins
+  169  claim
+  170  clear
+  171  yum install docker -y
+  172  systemctl start docker
+  173  docker info
+  174  clear
+  175  docker images
+  176  docker info
+  177  systemctl start docker
+  178  docker pull ubantu
+  179  docker info
+  180  docker login -u vjddocker
+  181  docker pull ubantu
+  182  docker login registry-1.docker.io/v1
+  183  docker pull ubantu
+  184  systemctl status docker
+  185  systemctl start docker
+  186  docker pull ubantu
+  187  docker pull ubuntu
+  188  docker images
+  189  docker ps -a
+  190  clear
+  191  docker pull ubuntu:20.04
+  192  docker umages
+  193  docker images
+  194  clear
+  195  docker pull sonal04/base01
+  196  docker images
+  197  docker run ubuntu
+  198  docker ps
+  199  docker ps -a
+  200  docker run --name cont2 -it ubuntu
+  201  docker ps -a
+  202  docker attach cont2
+  203  docker ps -a
+  204  docker start cont2
+  205  docker stop cont2
+  206  docker ps
+  207  history
+  208  docker run busybox
+  209  docker ps -a
+  210  docker run --name cont1 ubuntu
+  211  docker ps -a
+  212  hostname DockerHost
+  213  sudo su -
+  214  docker ps
+  215  docker ps -a
+  216  docker rm -f cont2
+  217  docker rm -f$(docker rps -aq)
+  218  docker rm -f $(docker rps -aq)
+  219  docker rm -f $(docker ps -aq)
+  220  docker ps -a
+  221  docker exec -it web /bin/bash
+  222  clear
+  223  docker exec -it web /bin/bash
+  224  docker ps -a
+  225  clear
+  226  bash
+  227  clear
+  228  sh
+  229  systemctl start jenkins
+  230  systemctl start docker
+  231  docker images
+  232  docker ps -a
+  233  clear
+  234  history
+  235  exit
+  236  clear
+  237  docker system prune --all
+  238  docker images
+  239  clear
+  240  hostname DockerHost
+  241  sudo su -
+  242  docker run --name web -d nginx
+  243  docker ps -a
+  244  dockerpush image01
+  245  docker push image01
+  246  docker tag myimage01 vjddocker/myiamge01
+  247  docker images
+  248  docker push vjddocker/myiamge01
+  249  clear
+  250  docker run -it --name basecont ubuntu
+  251  docker ps -a
+  252  docker commit basecont myimage01
+  253  docker images
+  254  clear
+  255  docker run --name web2 -d -p 9090:80 nginx
+  256  docker ps -a
+  257  docker run --name web3 -d -P 9090:80 nginx
+  258  docker run --name web3 -d -P nginx
+  259  docker ps -a
+  260  CLEAR
+  261  clear
+  262  docker images
+  263  docker login
+  264  docker push image01
+  265  clear
+  266  systemctl start docker
+  267  systemctl start jenkins
+  268  clear
+  269  clear
+  270  clea
+  271  clear
+  272  history
+  273  exit
+  274  mkdir mydockerfiles
+  275  vim dockerfile
+  276  nano dockerfile
+  277  clear
+  278  docker rm -f $(docker ps -aq)
+  279  docker system prune --all
+  280  clear
+  281  vi index.html
+  282  vi dockerfile
+  283  docker build -t mynginx .
+  284  clear
+  285  docker run -d -P mynginx
+  286  DOCKER PS -A
+  287  docker ps -a
+  288  docker build -t myimage01:tag .
+  289  docker images
+  290  cat dockerfile
+  291  docker system prune --all
+  292  vi dockerfile
+  293  cat dockerfile
+  294  clear
+  295  docker build -t myimage01:tag .
+  296  docker images
+  297  docker history cb8670ab8960
+  298  clear
+  299  clear
+  300  systemctl start docker
+  301  docker system prune --all
+  302  clear
+  303  systemctl start jenkins
+  304  vi /etc/sudoers
+  305  nano /etc/sudoers
+  306  chmod 777 /var/run/docker.sock
+  307  clear
+  308  history
+  309  exit
+  310  systemctl start docker
+  311  docker system prune --all
+  312  systemctl start jenkins
+  313  docker ps -a
+  314  cat /etc/sudoers
+  315  nano /etc/sudoers
+  316  chmod 777 /var/run/docker.sock
+  317  clear
+  318  exit
+  319  clea
+  320  clear
+  321  sytem ps -a
+  322  system ps -a
+  323  docker ps a-
+  324  docker ps -a
+  325  docker stop ccf00c5462c4
+  326  docker system prune -all
+  327  docker system prune --all
+  328  clear
+  329  docker ps -a
+  330  clear
+  331  systemctl start docker
+  332  docker ps -a
+  333  docker images
+  334  clear
+  335  systemctl start jenkins
+  336  chmod 777 /var/run/docker.sock
+  337  systemctl start docker
+  338  docker ps -a
+  339  docker stop a33ea28873bf
+  340  docker system prune --all
+  341  dockre ps -a
+  342  docker ps -a
+  343  clear
+  344  systemctl start jenkins
+  345  chmod 777 /var/run/docker.sock
+  346  exit
+  347  systemctl start docker
+  348  docker ps -a
+  349  stsremctl start jenkins
+  350  stystemctl start jenkins
+  351  systemctl start jenkins
+  352  chmod 777 /var/run/docker.sock
+  353  docker ps -a
+  354  docker delete wizardly_allen
+  355  docker stop wizardly_allen
+  356  docker system prune --all
+  357  clear
+  358  ls
+  359  clear
+  360  ls
+  361  git clone https://github.com/vjdgithub/DevOpsCodeDemo.git
+  362  cd DevopsCodeDemo
+  363  cd DevOpsCodeDemo
+  364  ls
+  365  clear
+  366  ls
+  367  git remote rm origin
+  368  git remote add origin https://github.com/vjdgithub/MultiBranchDeployment.git
+  369  git branch
+  370  git rename git branch -M master addressbook
+  371  git branch -M master addressbook
+  372  git status
+  373  git branch
+  374  git push origin addressbook
+  375  cd DevOpsCodeDemo
+  376  ls
+  377  cd .
+  378  cd ..
+  379  ls
+  380  cd nodejsappDockerfile
+  381  git remote rm origin
+  382  git remote add origin https://github.com/vjdgithub/MultiBranchDeployment.git
+  383  git branch
+  384  git branch -M master nodejs
+  385  git bransch
+  386  git branch
+  387  git push origin nodejs
+  388  clear
+  389  ls
+  390  cd nodejsappDockerfile
+  391  sudo su -
+  392  docker ps -a
+  393  docker stop 0bba8f5ecb32
+  394  docker system prune --all
+  395  clear
+  396  systemctl start docker
+  397  docker ps -a
+  398  docker stop ce1ff1bd708c
+  399  docker system prune --all
+  400  clear
+  401  systemctl start jenkins
+  402  docker procees -a
+  403  docker ps -a
+  404  clear
+  405  history

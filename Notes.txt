@@ -671,7 +671,127 @@ for java application deployed in tomcat access the appliacation appended with wa
 
 http://18.223.171.192:32769/addressbook
 
+pipeline {
+    
+    tools {maven 'mymaven'}
+    
+    agent any 
+    
+    stages {
+        
+        stage ('Clone Repo') {
+            
+            steps {
+                git 'https://github.com/vjdgithub/DevOpsCodeDemo.git'
+            }
+            
+        }
+       
+                stage ('Build the Code') {
+            
+            steps {
+                sh 'mvn clean install package'
+            }
+            
+        }
+        
+        stage ('Copy the War file from target directory to current diroctory') {
+            
+            steps {
+                sh 'cp /var/lib/jenkins/workspace/CICDpipeline2/target/addressbook.war .'
+            }
+            
+        }
+        stage ('Build Image') {
+            
+            steps {
+                sh 'docker build -t myappjenkins2 .'
+            }
+            
+        }
+        stage ('Deploy the Image') {
+            
+            steps {
+                sh 'docker run -d -P myappjenkins2'
+                sh 'docker ps -a'
+            }
+            
+        }
+        
+    }
+}
+
 ------
+every time bulds, if we want to build different image then use jenkins variable
+
+jenkins variable BUILD_NUMBER
+
+stage ('Build Image') {
+            
+            steps {
+                sh 'docker build -t myappjenkins2:$BUILD_NUMBER .'
+            }
+            
+        }
+        stage ('Deploy the Image') {
+            
+            steps {
+                sh 'docker run -d -P myappjenkins2:$BUILD_NUMBER'
+                sh 'docker ps -a'
+            }
+            
+        }
+
+in docker we have to manually delete the older conatiners
+
+we have to use any of the archestartion tools to automatically delete the older containers like docker swarm or kubernatics
+
+-->  Multi Branch Deployemnet - Multi branch Pipeline
+
+git clone https://github.com/vjdgithub/DevOpsCodeDemo.git
+
+to remove old origin value
+
+git remote rm origin
+
+to add new 
+
+git remote add origin https://github.com/vjdgithub/MultiBranchDeployment.git
+
+to rename the master branch 
+
+git branch -M master addressbook
+
+to create branch on a remote repository with a branch name, source code and jenkins file
+
+git push origin addressbook
+
+similary for another app
+
+cd nodejsappDockerfile
+
+git remote rm origin
+
+to add new 
+
+git remote add origin https://github.com/vjdgithub/MultiBranchDeployment.git
+
+to rename the master branch 
+
+git branch -M master nodejs
+
+to create branch on a remote repository with a branch name, source code and jenkins file
+
+git push origin nodejs 
+
+and write dockersfile and jenkins file in the github
+
+similar multi branch scenario
+
+https://github.com/Sonal0409/JavaWebCalculator
+
+---------------------------------
+
 
 
 
