@@ -202,7 +202,7 @@ sudo su -
 Agent should be enabled to Random in Manage Jenkins/Security
 
 configure the agents to the master
- manual setup via nodes or on the cloud automatically
+manual setup via nodes or on the cloud automatically
 no use manual setup in using nodes in configuration 
 
 labels are used for selecting the desired VM on the linux
@@ -212,7 +212,7 @@ use it to build the jobs on maching lable expressions
 host address is private ip as both the instances are in the same network
 
 
---jfrog artifactory conncet using ssh and deply artifacts
+--jfrog artifactory conncet using ssh and deploy artifacts
 
 all the jobs run on any node labled 'linux_node'
 
@@ -791,7 +791,85 @@ similar multi branch scenario
 https://github.com/Sonal0409/JavaWebCalculator
 
 ---------------------------------
+Class 13:
+---------------------------------
 
+All the Orchestration tools works under custer mode
+
+-- Cluster is a set of virtual machines/Nodes with a container tool (CRI) installed on it . i.e. docker
+
+-- Roncher is a tool that manages cluster
+
+-- Orchestration tool allways depend on conatiner runtime (CRI)
+
+-- For Docker swarm CRI - Docker
+-- For Kubernatics it can be Docker or Container D
+-- EKS uses docker in the back ground
+
+-- A set of containers is a Micro Service 
+
+-- We will create a relationship between these VMS/ Nodes and one of them is leader and others are worker nodes.
+-- On Master you intialise Docker swarm on it, then it will become master. It is als called as leader node as swarm initiated on it.
+-- On one cluster only one leader 
+-- when initiate swarm, there will be a token generated address and port number of the leader. this token will be copied to your worker nodes in your cluster
+--In docker sworm there is raft algirithm, which takes the request of orchestartion command
+
+-- By default swarm is inactive. we need to activate in only on one of the machine so that it can become manager
+
+-- docker swarm init
+--- copy the key command on the other VMs/nodes on the cluster and execute so that they become worker nodes of this swarm network
+
+-- to know the nodes status belo command
+
+docker node ls
+
+--- you can promote worker to become manager and demote vice versa but atleast a given time there should be one leader otherwise your swarm cluster become headless
+
+--- if we execute below command on any of the worker nodes it will become manager but not as leader . but its status is reachable to leader in case of leader is leaving
+
+docker swarm join-token manager
+
+-- docker swarm join-token worker - the node will join as worker
+
+-- to selct the new leader via the polling
+
+-- docker sward does provde one object that docker does not provide i.e. service object ( High level object)
+
+docker service create --name mysvc --replicas 4 -p 8081:80 nginx
+
+docker service ls
+
+docker service ps mysvc
+
+-- in case of docker swarm containers are scheduled on the manager node
+--in case of kubernatics containers are scheduled on the worker node
+
+watch docker service ls - every 2 sec this command is going to run
+
+docker rm -f <contanier id >  - to delete container
+
+docker service ps mysvc | grep Running
+
+docker service scale mysvc=6 -to scale up/down
+
+-- in docker swarm scaling up and down shold be done manually
+
+docker service scale mysvc=0
+
+docker service rm mysvc
+
+network load balancing
+docker service create --name mysvc --replicas 2 -p 8282:3000 sonal04/samplepyapp:v1
+
+while true; do curl http://18.191.145.175:8282/; sleep 1; echo " "; done
+
+give CTL + C to stop
+
+docker service scale mysvc=4
+
+docker service update --image sonal04/samplepyapp:v2 mysvc
+
+it is of round rabbin fashion raft algirithm will take care of it
 
 
 

@@ -1,0 +1,175 @@
+1  ls -la
+    2  clear
+    3  systemctl start jenkins
+    4  clear
+    5  git config --global user.email sahitya967@gmail.com
+    6  git config --global user.name sahitya967
+    7  clear
+    8  cd mergeconflict
+    9  cd sample-project
+   10  cat index.html
+   11  clear
+   12  git branch
+   13  git checkout master
+   14  cat index.html
+   15  git branch
+   16  git status
+   17  git checkout branch2
+   18  git status
+   19  git add .
+   20  git commit -m "branch 2 changes"
+   21  git status
+   22  git checkout master
+   23  git status
+   24  git log
+   25  clear
+   26  git checkout master
+   27  git merge branch2 master
+   28  git branch
+   29  git status
+   30  git log
+   31  clear
+   32  git checkout branch2
+   33  ls
+   34  nano index.html
+   35  cat index.html
+   36  git checkout master
+   37  ls
+   38  cat index.html
+   39  clear
+   40  git branch
+   41  cat index2.html
+   42  cat index.html
+   43  git add .
+   44  git commit -m "changed"
+   45  git log
+   46  git checkout branch2
+   47  git status
+   48  git checkout master
+   49  git merge branch2 master
+   50  git delete branch branch2
+   51  git branch -d branch2
+   52  git status
+   53  git branch
+   54  clear
+   55  ls
+   56  nano index.html
+   57  clear
+   58  git branch branch2
+   59  git branch
+   60  cat index.html
+   61  clear
+   62  checkout branch branch2
+   63  git checkout branch2
+   64  ls
+   65  cat index.html
+   66  git branch
+   67  clear
+   68  nano index.html
+   69  cat index.html
+   70  clear
+   71  git checkout master
+   72  cat index.html
+   73  git branch -d branch2
+   74  git branch'
+   75  git branch
+   76  ls
+   77  cd /mergeconflict/sample-project
+   78  cd mergeconflict
+   79  cd sample-project
+   80  clear
+   81  ls
+   82  cd ..
+   83  rm -rf sample-project
+   84  ls
+   85  clear
+   86  git clone https://github.com/vjdgithub/sample-project.git
+   87  clear
+   88  git branch branch2
+   89  cd sample-project
+   90  git branch branch2
+   91  git checkout branch2
+   92  git branch
+   93  clear
+   94  nano index.html
+   95  ls
+   96  cat index.html
+   97  clear
+   98  nano index.html
+   99  git status
+  100  git branch
+  101  clear
+  102  ls
+  103  ls -la
+  104  mkdir mergeconflict
+  105  cd mergeconflict
+  106  git clone https://github.com/vjdgithub/sample-project.git
+  107  ls
+  108  cd sample-project
+  109  hostname developer2
+  110  sudo su -
+  111  cd mergeconflict
+  112  cd sample-project
+  113  clear
+  114  ls
+  115  git branch
+  116  cd mergeconflict
+  117  cd sample-project
+  118  ls
+  119  clear
+  120  git baranch
+  121  git branch
+  122  cd mergeconflict
+  123  cd sample-project
+  124  git branch -d branch3
+  125  clear
+  126  exit
+  127  cd mergeconflict
+  128  cd sample-project
+  129  git branch
+  130  git status
+  131  cat index.html
+  132  git checkout master
+  133  cat index.html
+  134  clear
+  135  git config --global  pull.ff true
+  136  git git pull origin master
+  137  git pull origin master
+  138  git fetch
+  139  ls
+  140  cat index.html
+  141  ls
+  142  clear
+  143  git pull origin master
+  144  clear
+  145  ls
+  146  cat index.html
+  147  clear
+  148  git branch
+  149  git merge branch3 master
+  150  apt-get install kdiff3 and git mergetool
+  151  apt -get install kdiff3 and git mergetool
+  152  yum install kdiff3 and git mergetool
+  153  git mergetool
+  154  git status
+  155  git branch
+  156  git merge branch3 master
+  157  git add .
+  158  git commit -m "added changes"
+  159  git merge branch3 master
+  160  git status
+  161  git mergetool
+  162  git merge branch3 master
+  163  sudo su -
+  164  clear
+  165  yum instll docker -y
+  166  yum install docker -y
+  167  systemctl start docker
+  168  clear
+  169  docker swarm join --token SWMTKN-1-2gjr0x8rv8jj0i783pgv8adcwwqz9dhzjf79rqtujnwq93l1qj-a1imul75u0j2p9h3clryhyha3 172.31.6.200:2377
+  170  clear
+  171  ls
+  172  hostname Worker 1
+  173  hostname Worker1
+  174  sudo su -
+  175  history

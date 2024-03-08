@@ -1,0 +1,21 @@
+1  clear
+    2  yum install docker -y
+    3  systemctl start docker
+    4  clear
+    5  docker swarm join --token SWMTKN-1-2gjr0x8rv8jj0i783pgv8adcwwqz9dhzjf79rqtujnwq93l1qj-a1imul75u0j2p9h3clryhyha3 172.31.6.200:2377
+    6  clear
+    7  ls
+    8  Hostname Worker2
+    9  hostname Worker2
+   10  sudo su -
+   11  clear
+   12  docker ps -a
+   13  clear
+   14  ls
+   15  while true: do curl http://18.191.145.175:8282/; sleep 1; echo " "; done
+   16  while true; do curl http://18.191.145.175:8282/; sleep 1; echo " "; done
+   17  clear
+   18  history
+   19  exit
+   20  docker ps -a
+   21  history
