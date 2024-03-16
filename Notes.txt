@@ -871,6 +871,70 @@ docker service update --image sonal04/samplepyapp:v2 mysvc
 
 it is of round rabbin fashion raft algirithm will take care of it
 
+--------------------------------------------------------------
+Class 13
+---------
+
+Difference between CNI and Cube Proxy
+
+docker network ls
+
+docker - bridge network
+docker swarm - overlay network
+
+incase of container we have to install CNI
+
+tocreate a new network 
+
+docker network create --driver bridge net1
+
+
+
+------------------------------------------------------------
+Class 17
+---------
+
+docker system prune --all
+
+hostname AnsibleController
+
+sudo amazon-linux-extras install epel
+
+yum install ansible
+
+ansible --version
+
+cd /etc/ansible to get host file
+
+adduser ansiuser
+passwd ansiuser
+
+vim /etc/ssh/sshd_config
+
+vim /etc/sudoers
+
+systemctl restart sshd
+
+su - ansiuser
+ssh-keygen and press enter and enter
+
+generated the public key /home/ansiuser/.ssh/id_rsa.pub
+
+use the command to copy public key to worker nodes
+
+ssh-copy-id -i ansiuser@<worker nodes private id as both the nodes are in the same network>
+ssh-copy-id -i ansiuser@172.31.44.94
+
+create inventory in cd etc/ansible
+
+sudo vim hosts
+
+ansible webserver -m ping
+
+ansible testserver -m ping
+
+
+
 
 
 
