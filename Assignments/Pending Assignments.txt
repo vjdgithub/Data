@@ -1,8 +1,5 @@
 5  - case study Ansible - 13 th 9 AM
 7  - case study - docker - 18 the 9 AM
 9  - case study - Kubernatics - 20 th 9 AM
-10 - Quiz - Prometheus and Grafana - 15 th 9 AM
-11 - Quiz - Terraform_1 - 19 th 9 AM
-12 - Quiz - Terraform_2 - 20 th 9 AM
 After 17 - Project_1 - 25 th 9 AM
 After 17 - Project_2 - 25 th 9 AM
