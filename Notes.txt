@@ -1,3 +1,27 @@
+yum install git -y
+
+sudo amazon-linux-extras install java-openjdk11 -y
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+yum install jenkins -y
+
+systemctl start jenkins
+
+yum install docker -y
+
+systemctl start dcoker
+
+jenkins ALL=NOPASSWD: ALL
+
+or you can run a command to give permission to run docker by any user as below
+
+chmod 777 /var/run/docker.sock 
+
+
+
+
+-----------------------
 Class 5 :
 
 A pipline is a set of jobs which are executed one after another
@@ -870,6 +894,8 @@ docker service scale mysvc=4
 docker service update --image sonal04/samplepyapp:v2 mysvc
 
 it is of round rabbin fashion raft algirithm will take care of it
+
+docker service rm helloworld
 
 --------------------------------------------------------------
 Class 13

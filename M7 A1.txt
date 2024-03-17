@@ -1,0 +1,46 @@
+git clone https://github.com/edurekacontent/dockerContent
+
+cd ..
+
+vi dockerfile
+--
+FROM httpd:2.4
+VOLUME /var/log/httpd24
+COPY ./dockerContent/ /usr/local/apache2/htdocs/
+--
+docker build -t my-apacheimage .
+
+docker tag my-apacheimage vjddocker/my-apacheimage
+
+docker login
+
+docker push vjddocker/my-apacheimage
+
+docker swarm init
+
+docker swarm join --token SWMTKN-1-11umq8anjwrnefh52rd8x2fnq6vgebich52ggiirwvl910mfo4-8jpe5yieij3zagkkgm0xwtxwz 172.31.33.167:2377
+
+docker node ls
+
+docker service create --name mysvc --replicas 3 -p 8081:80 vjddocker/my-apacheimage
+
+docker service ls
+
+docker service ps mysvc
+
+docker service rm mysvc
+
+docker service create --name mysvc --replicas 2 -p 8081:80 -v /root/M7A1/log:/var/log/httpd24 vjddocker/my-apacheimage
+
+----------------------------------------------------------
+
+docker run -v /root/M7A1/log:/var/log/httpd24 vjddocker/my-apacheimage  -- cant see how to run using service
+
+
+
+
+
+
+
+
+

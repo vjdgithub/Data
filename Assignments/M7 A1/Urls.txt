@@ -1,0 +1,13 @@
+https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-to-dockerize-Apache-httpd-web-servers
+
+https://stackoverflow.com/questions/34809646/what-is-the-purpose-of-volume-in-dockerfile
+
+https://serverfault.com/questions/763882/apache-in-docker-how-do-i-access-log
+
+https://docs.docker.com/config/containers/logging/
+
+https://www.tutorialspoint.com/what-is-the-purpose-of-volume-in-dockerfile
+
+https://www.google.com/search?q=logs+folder+for+httpd+in+linux+in+dockerfile&sca_esv=ec36d02c44708c07&sxsrf=ACQVn081EJbz2LNWUsPa8gBeuwI6-DGBgA%3A1710659259194&source=hp&ei=u5b2ZebQCcqt4-EPttOqEA&iflsig=ANes7DEAAAAAZfakyxkBr5Db-oER3MoNIA84fwKVw4nf&oq=logs+folder+for+httpd+&gs_lp=Egdnd3Mtd2l6IhZsb2dzIGZvbGRlciBmb3IgaHR0cGQgKgIIADIFECEYoAEyBRAhGKABMgUQIRigATIFECEYnwUyBRAhGJ8FMgUQIRifBTIFECEYnwUyBRAhGJ8FMgUQIRifBTIFECEYnwVIl3dQxgRYwmFwBHgAkAEAmAH8AaABqyCqAQYwLjE4Lje4AQHIAQD4AQGYAh2gAv8hqAIKwgIHECMY6gIYJ8ICChAjGIAEGIoFGCfCAgQQIxgnwgILEAAYgAQYigUYkQLCAgoQABiABBiKBRhDwgILEAAYgAQYsQMYgwHCAhEQLhiABBixAxiDARjHARjRA8ICDhAuGIAEGLEDGMcBGNEDwgIFEAAYgATCAggQABiABBixA8ICDRAAGIAEGIoFGEMYsQPCAgoQABiABBgUGIcCwgIGEAAYFhgewgIIEAAYFhgeGA_CAgcQABiABBgNwgILEAAYgAQYigUYhgPCAgQQIRgKmAMHkgcGNC4xNy44oAfWmQE&sclient=gws-wiz
+
+https://docs.docker.com/engine/swarm/swarm-tutorial/delete-service/
