@@ -19,8 +19,6 @@ or you can run a command to give permission to run docker by any user as below
 chmod 777 /var/run/docker.sock 
 
 
-
-
 -----------------------
 Class 5 :
 
@@ -900,19 +898,296 @@ docker service rm helloworld
 --------------------------------------------------------------
 Class 13
 ---------
-
-Difference between CNI and Cube Proxy
-
-docker network ls
-
 docker - bridge network
 docker swarm - overlay network
 
 incase of container we have to install CNI
 
-tocreate a new network 
+for K8S - Dedicated CNI - Weave network, calico network, etc...
+every cloud provider will give their own network for K8S Cluster
+
+
+Difference between CNI (to get Ip addresses and ports in cluster network ) and 
+Cube Proxy is a networking rule to access your container
+
+docker network ls
+
+ip a
+
+docker inspect <network id>
+
+to create a new network 
 
 docker network create --driver bridge net1
+
+docker run -d -P --network net1 nginx
+
+you can also change sub net and ip range by using below help
+
+docker network create --help
+
+docker system prune --all
+
+kubectl get nodes
+
+kubectl run pod1 --image nginx 
+
+kubectl describe pod pod1 | less
+
+kubectl get pods -n kube-system
+
+kubectl logs 
+
+kubectl get nodes -o wide
+
+gcloud container clusters get-credentials CLUSTER_NAME --region REGION --project PROJECT_ID
+
+service account is a to token to create the pod
+
+Push approach - Ansible
+
+and pull approach - K8s
+------------------------------------------------------------
+Class 14
+--------
+A set of maps is a object
+
+mkdir mykubefiles
+
+cd mykubefiles
+
+--------
+
+vim pod-definition.yml
+
+apiVersion: v1
+kind: Pod
+metadata:
+   name: podnginx
+   labels:
+      author: jagadeesh
+      app: nginx
+      type: webserver
+spec:
+  containers:
+    - name: c1
+      image: nginx
+
+-------------
+
+kubectl get pods
+kubectl delete pod pod1
+
+kubectl create -f pod-definition.yml
+
+kubectl get pods
+kubectl get pods -o wide
+kubectl describe pod podnginx
+kubectl get pods --show-labels
+kubectl get pods -l author=jagadeesh
+
+labels are used to query the pods and selecting the pods
+
+vim test-pod.yml
+
+https://github.com/Sonal0409/Vodafone-Kubernetes-Notes/blob/main/Day2-Notes/Service/ClusterIPDemo/UbuntuPod.yml
+apiVersion: v1
+
+kind: Pod
+
+metadata:
+
+ name: testpod
+
+ labels:
+
+  role: test
+
+spec:
+
+ containers:
+
+  - name: c1
+
+    image: ubuntu
+
+    args: [/bin/bash, -c, 'sleep 6000']
+
+
+
+to get ip address of the terminal 
+
+kubectl get pods -o wide
+
+10.244.1.5
+
+to ping one pod with another pod with ip 
+
+kubectl exec -it testpod -- /bin/bash
+
+apt-get update
+
+apt-get install curl -y
+
+curl 10.244.1.5
+
+curl podnginx
+
+https://github.com/Sonal0409/Vodafone-Kubernetes-Notes/blob/main/Day2-Notes/Service/ClusterIPDemo/Service-clusterIP.yml
+
+vim service.yml
+---
+apiVersion: v1
+kind: Service
+metadata: 
+ name: mysvc1
+spec:
+ type: ClusterIP
+ selector:
+  type: webserver
+ ports:
+ - targetPort: 80
+   port: 80
+
+kubectl create -f service.yml
+
+
+kubectl get service
+
+in testpod 
+curl <ip address of service> 
+curl <service name /domain name>
+
+curl mysvc1
+curl mysvc1:80
+
+kubectl get endpoints mysvc1
+-----------------------------------------------------------
+Class 15:
+---------
+
+to access the container outside the cluster we need to do port mapping (Nodeport service)
+
+watch kubectl get pods --show-labels 
+
+
+vim pod-definition.yml
+
+apiVersion: v1
+kind: Pod
+metadata:
+   name: pod1
+   labels:
+      type: webserver
+spec:
+  containers:
+    - image: nginx
+      name: c1
+      
+kubectl create -f pod-definition.yml
+
+vim service.yml
+---
+apiVersion: v1
+kind: Service
+metadata: 
+ name: mysvc1
+spec:
+ type: ClusterIP
+ selector:
+  type: webserver
+ ports:
+ - targetPort: 80
+   port: 80
+
+kubectl get svc
+
+vim service2.yml
+---
+apiVersion: v1
+kind: Service
+metadata: 
+ name: mysvc-nodeport
+spec:
+ type: NodePort
+ ports:
+ - targetPort: 80
+   port: 80
+ selector:
+  type: webserver
+
+kubectl get svc
+
+kubectl get nodes -o wide
+
+<ip address of Work node>:31836
+
+vim service3.yml
+---
+apiVersion: v1
+kind: Service
+metadata: 
+ name: mysvc-lb
+spec:
+ type: LoadBalancer
+ ports:
+ - targetPort: 80
+   port: 80
+ selector:
+  type: webserver
+
+now we get external ip . only id address in the browser is sufficient
+
+kubectl delete svc  mysvc-lb
+
+when we delete load balancer service - extrernal load balance which created on GCP will also be deleted
+
+kubectl delete svc  mysvc-nodeport
+
+kubectl create -f pod-definition.yml
+--------------------
+scaling up and scaling down using replica set
+
+kubectl delete pod pod1
+
+scaling up and scaling down 
+
+vim deployment.yml
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+     name: nginxpod
+     labels:      
+      app: nginx
+    spec:
+     containers:
+     - name: c1
+       image: leaddevops/kubeserve:v1
+
+kubectl get pods
+
+kubectl create -f deployment.yml
+
+kubectl get all
+
+watch kubectl get replicaset
+
+kubectl delete pod nginx-7d4bc45fb9-6nk9s
+
+kubectl scale deployment nginx --replicas 5
+
+
+
 
 
 
