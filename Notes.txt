@@ -20,6 +20,7 @@ chmod 777 /var/run/docker.sock
 
 
 -----------------------
+
 Class 5 :
 
 A pipline is a set of jobs which are executed one after another
