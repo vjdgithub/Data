@@ -1187,6 +1187,38 @@ kubectl delete pod nginx-7d4bc45fb9-6nk9s
 
 kubectl scale deployment nginx --replicas 5
 
+Auto scaling : HPA
+--------------
+
+vim deployment-hpa.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          resources:
+            limits:
+              cpu: 10m
+
+kubectl create -f deployment-hpa.yml
+
+kubectl top pods
+
+
+
 
 
 
