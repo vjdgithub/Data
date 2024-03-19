@@ -107,6 +107,41 @@ Copy this port number, and execute on the browser to see the website.
 
 Checked our website’s connectivity with the database
 
+----------------------------
 
+------------------------------------------
+kubectl create deployment nodejsapp --image=devopsedu/employee
+
+Build a nodejsapp.yaml for front end website, with the following code.
+
+vim nodejsapp.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejsapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejsapp
+  template:
+    metadata:
+     name: nodejsapp
+     labels:      
+      app: nodejsapp
+    spec:
+     containers:
+     - name: nodejsapp
+       image: devopsedu/employee
+       ports:
+         - containerPort: 8888
+       env:
+         - name: MONGO_URI 
+           value: "mongodb://mongo:27017/employees"
+
+kubectl create -f nodejsapp.yml
+
+----------------------
 
 
