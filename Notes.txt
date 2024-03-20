@@ -1218,10 +1218,55 @@ kubectl create -f deployment-hpa.yml
 kubectl top pods
 
 
+--------------
 
+vim hpa.yml
 
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 5
 
+kubectl create -f hpa.yml
 
+kubectl top pods
+
+--------
+vim hpa-service.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+spec:
+  type: ClusterIP  
+  selector:
+    app: nginx
+  ports:
+   - protocol: TCP
+     port: 80
+     targetPort: 80
+
+kubectl create -f hpa-service.yml
+
+kubectl top pods
+------
+Command to generate the load:
+
+# kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http:<ClusterIP>:80; done"
+
+# kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http:10.109.194.248:80; done"
+
+----------------------------------------------------------
+Class 16
 
 
 ------------------------------------------------------------
