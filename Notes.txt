@@ -1267,6 +1267,27 @@ Command to generate the load:
 
 ----------------------------------------------------------
 Class 16
+--------
+
+by default storage class is comes with kubernatics engine in GCP
+
+kubectl get sc
+
+vim sc.yml
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-ssd
+
+kubectl create -f sc.yml
+
+or Create by using raw format as below
+
+RECLAIM POLICY : delete , recycle, retain
 
 
 ------------------------------------------------------------

@@ -144,4 +144,6 @@ kubectl create -f nodejsapp.yml
 
 ----------------------
 
+https://www.mongodb.com/community/forums/t/how-do-i-get-the-value-of-mongodb-uri/166717
+
 
