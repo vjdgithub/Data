@@ -1293,7 +1293,7 @@ kubectl get sc -o wide
 
 RECLAIM POLICY : delete , recycle, retain
 
-vim pvc.yml
+vim PD-pvc.yml
 
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -1307,18 +1307,20 @@ spec:
   accessModes:
     - ReadWriteOnce
 
-kubectl create -f pvc.yml
+kubectl create -f PD-pvc.yml
 
 or Create by using raw format as below
 
-kubectl create -f https://raw.githubusercontent.com/vjdgithub/Edureka/main/Class%2016/pvc.yml
+kubectl create -f https://raw.githubusercontent.com/vjdgithub/Edureka/main/Class%2016/PD-pvc.yml
 
 kubectl get pvc -o wide
 
 ReadWriteOnce - means pods from only specific one worker node will be able to write in the disk - PV supports ReadWriteOnce only
 Disk type NFS - ReadWriteMany- means pods from more than one worker nodes will be able to write in the the disk
 
+kubectl get pv -o wide
 
+RECLAIM POLICY : delete - if we delete the claim the volume gets deletd automatically
 
 
 ------------------------------------------------------------
