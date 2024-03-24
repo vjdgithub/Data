@@ -1,0 +1,42 @@
+chmod 777 /var/run/docker.sock 
+
+pipeline {
+    tools {maven 'MyMaven'}
+    agent any 
+    stages {
+        stage ('Clone Repo') {
+            steps { git 'https://github.com/vjdgithub/DevOpsCodeDemo.git'}
+        }
+        stage ('Compile Code') {
+            steps { sh 'mvn compile'}
+        }
+        stage ('Review Code') {
+            steps {sh 'mvn pmd:pmd' }
+        }
+        stage ('Test Code') {
+            steps { sh 'mvn test' }
+        }
+        stage ('Package Code') {
+            steps { sh 'mvn clean install package'}
+        }
+        stage ('Build Image') {
+            steps {
+                sh 'cp /var/lib/jenkins/workspace/Project1_pipeline/target/addressbook.war .'
+                sh 'docker build -t myimagejenkins .'
+            }
+        }
+        stage('Push image to dockerhub'){
+            steps {
+                sh 'docker tag myimagejenkins vjddocker/myimagejenkins:$BUILD_NUMBER'
+                sh 'docker login --username vjddocker --password Docker@2024'
+                sh 'docker push vjddocker/myimagejenkins:$BUILD_NUMBER'
+            }
+        }
+        stage ('Deploy the Image to create containers using the above image') {
+            steps {
+                sh 'docker run -d -P vjddocker/myimagejenkins:$BUILD_NUMBER'
+                sh 'docker ps -a'
+            }
+        }
+    }
+}

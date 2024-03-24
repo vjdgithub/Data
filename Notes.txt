@@ -19,6 +19,22 @@ or you can run a command to give permission to run docker by any user as below
 chmod 777 /var/run/docker.sock 
 
 
+
+So go to
+vim /etc/sudoers
+I
+add under root
+Jenkins ALL=NOPASSWD: ALL
+:wq!
+
+
+to not to save the file 
+
+Esc
+:q!
+Enter
+
+
 -----------------------
 
 Class 5 :
