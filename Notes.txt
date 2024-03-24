@@ -1303,7 +1303,132 @@ kubectl create -f sc.yml
 
 or Create by using raw format as below
 
+kubectl create -f https://raw.githubusercontent.com/vjdgithub/Edureka/main/Class%2016/sc.yml
+
+kubectl get sc -o wide
+
 RECLAIM POLICY : delete , recycle, retain
+
+vim PD-pvc.yml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sc-pvc 
+spec:
+  storageClassName: fast
+  resources:
+    requests:
+      storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+
+kubectl create -f PD-pvc.yml
+
+or Create by using raw format as below
+
+kubectl create -f https://raw.githubusercontent.com/vjdgithub/Edureka/main/Class%2016/PD-pvc.yml
+
+kubectl get pvc -o wide
+
+ReadWriteOnce - means pods from only specific one worker node will be able to write in the disk - PV supports ReadWriteOnce only
+Disk type NFS - ReadWriteMany- means pods from more than one worker nodes will be able to write in the the disk
+
+kubectl get pv -o wide
+
+RECLAIM POLICY : delete - if we delete the claim the volume gets deletd automatically
+
+kubectl delete pvc sc-pvc
+
+# vim pod-dynamic.yml
+
+apiVersion: v1
+kind: Pod
+metadata:
+ name: pod-pvc
+spec:
+ containers:
+  - image: nginx
+    name: c1
+    volumeMounts:
+     - mountPath: "/data"
+       name: my-volume
+ volumes:
+  - name: my-volume
+    persistentVolumeClaim:
+     claimName: sc-pvc
+
+kubectl create -f pod-dynamic.yml
+
+or Create by using raw format as below
+
+kubectl create -f https://raw.githubusercontent.com/vjdgithub/Edureka/main/Class%2016/pod-dynamic.yml
+
+kubectl get pods -o wide
+
+kubectl describe pvc sc-pvc
+
+kubectl describe pvc sc-pvc | less
+
+kubectl exec -it pod-pvc -- bash
+
+ls
+
+cd data
+
+touch file1
+
+exit
+
+kubectl delete pod pod-pv
+
+kubectl delete pvc --all
+
+kubectl get pv
+
+HELM: an utomatic package manager 
+-----
+
+To instll HELM exdcute below commands
+
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 > get_helm.sh
+
+chmod 700 get_helm.sh
+
+./get_helm.sh
+
+To create chart
+
+helm crete <chart name>
+
+helm create webapp
+
+if we delete all the yamls s below
+
+rm -rf *.yaml NOTES.txt tests ../values.yaml
+
+from
+
+https://github.com/Sonal0409/Vodafone-Kubernetes-Notes/blob/main/Day3-Notes/Network-policy/springboot-mongo-app.yml
+
+helm install mydemo webapp
+
+kubectl get all
+
+helm uninstall mydemo
+
+one of the helm charts repository bitnmi
+
+https://github.com/bitnami/charts/tree/main/bitnami/jenkins
+
+helm install my-release oci://registry-1.docker.io/bitnamicharts/jenkins
+
+
+
+
+
+
+
 
 
 ------------------------------------------------------------
