@@ -1436,6 +1436,12 @@ helm install my-release oci://registry-1.docker.io/bitnamicharts/jenkins
 Class 17
 ---------
 
+Provisioning - creating deleteing adn updating infarsatruture- before provisioning servers should be present
+
+Ansible - single controller machine - conncects and manages various other servers - push approach - on worker node there wont be any ansible - agent less tool
+
+Ansible - Red hot linux product
+
 docker system prune --all
 
 hostname AnsibleController
@@ -1448,14 +1454,32 @@ ansible --version
 
 cd /etc/ansible to get host file
 
+
+
+add user and pwd in both the ansi controller and ansi host
+
 adduser ansiuser
 passwd ansiuser
 
+PasswordAuthentication should be set to true in both the ansi controller and ansi host
+
 vim /etc/ssh/sshd_config
 
+to give ansiuser to give root permissions so that this user can execute, create etc files outside its home directory
 vim /etc/sudoers
+ansiuser ALL=NOPASSWD: ALL
+
+when Esc + :wq! + enter gives warning readonly
+
+Esc + :w! + enter
+
+Esc + :q + enter
+
+since we have changed sshd we do following
 
 systemctl restart sshd
+
+swich to ansiuser and generate ssh keys for ansiuser in controller machine
 
 su - ansiuser
 ssh-keygen and press enter and enter
@@ -1465,7 +1489,15 @@ generated the public key /home/ansiuser/.ssh/id_rsa.pub
 use the command to copy public key to worker nodes
 
 ssh-copy-id -i ansiuser@<worker nodes private id as both the nodes are in the same network>
-ssh-copy-id -i ansiuser@172.31.44.94
+ssh-copy-id -i ansiuser@172.31.41.231
+
+now you can connect to ansihost agin if required as below
+
+ssh 'ansiuser@172.31.41.231'
+
+and you exit as below
+
+exit
 
 create inventory in cd etc/ansible
 
