@@ -1,0 +1,19 @@
+ansible-playbook AnsiblePlaybook.yml
+
+- name: Deploy the Image to create containers from Docker hub using the Ansible Playbook
+  hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+  - name: Install docker on host server
+    package: name=docker state=present
+  - name: Start docker service
+    service: name=docker state=started
+  - name: create container
+    command: docker run -d -P vjddocker/myimagejenkins:3
+  - name: checking the process created for port number
+    command: docker ps -a
+    register: command_output
+  - debug:
+        var: command_output.stdout_lines
+

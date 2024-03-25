@@ -1424,13 +1424,12 @@ https://github.com/bitnami/charts/tree/main/bitnami/jenkins
 
 helm install my-release oci://registry-1.docker.io/bitnamicharts/jenkins
 
+to check failures or logs
 
+kubectl logs podname or
+kubectl describe pod podname
 
-
-
-
-
-
+https://github.com/Sonal0409/Vodafone-Kubernetes-Notes/tree/main/Day2-Notes/Deployment
 
 ------------------------------------------------------------
 Class 17
@@ -1499,20 +1498,338 @@ and you exit as below
 
 exit
 
-create inventory in cd etc/ansible
+create inventory in cd /etc/ansible
 
 sudo vim hosts
+
+[webserver]
+172.31.41.231
+
+[testserver]
+3.14.11.39
+
+adhoc command only used when one module whereevere morethan one module use play book
 
 ansible webserver -m ping
 
 ansible testserver -m ping
 
+execute command on all the servers
+
+ansible all -m ping
+
+cd
+pwd 
+/home/ansiuser
+
+vim myinventory
+
+[webserver]
+172.31.41.231
+
+[testserver]
+3.14.11.39
+
+if you want to execute commands on my own inventory then
+
+ansible -i /home/ansiuser/myinventory webserver -m ping
+
+creating AMI using Ansible Host in Aws
+
+now create new instance with network attached using this AMI and add the ip address to the webserver group. we see ansible able to execute command on this server also
 
 
+cd /etc/ansible
+
+sudo vim hosts
+
+sudo vim /etc/ansible/hosts
+
+[webserver]
+172.31.41.231
+172.31.37.80
+
+ansible webserver -m ping
+---------------------------------------------------
+Class 18 :
+
+write a play where you have a inventory file 
+
+https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+
+to install tomact on webserver and deploy war file a play book is created as below
+
+sudo vim playbooktomcat.yml
+
+- name: Deploy war file on tomcat
+  hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+  - name: Install package tomcat on server
+    package: name=tomcat state=present
+  - name: Start tomcat Server
+    service: name=tomcat state=started
+
+ansible-playbook playbooktomcat.yml --syntax-check
+
+ansible-playbook playbooktomcat.yml --become-true (if you want to mention become true runtime mention like this -escalating permissions to become root user )
+
+by default become user is root or if you want any to be any user mention like this
+ansible-playbook playbooktomcat.yml --become true --become_user <username>
+ansible-playbook playbooktomcat.yml --become true --become_user root
+
+ansible-playbook playbooktomcat.yml
+
+idempotentail feature of tomcat - ansible checks your desired confiuration is there or not
 
 
+Deploy the war file on tomcat server
+-------------------------
+
+- name: Deploy war file on tomcat
+  hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+  - name: Install package tomcat on server
+    package: name=tomcat state=present
+  - name: Start tomcat Server
+    service: name=tomcat state=started
+  - name: Deploy the war file on tomcat server
+    get_url: 
+      url=https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+      dest=/usr/share/tomcat/webapps
+  - name: Restart tomcat Server
+    service: name=tomcat state=restarted
+
+url to access : http://3.14.11.39:8080/sample/
+                http://<HostIp>:8080/sample/
+
+for detailed log -vv
+
+ansible-playbook playbooktomcat.yml -vv
+
+handles : only when parent task status is changed then is notified
+
+- name: Deploy war file on tomcat
+  hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+  - name: Install package tomcat on server
+    package: name=tomcat state=present
+  - name: Start tomcat Server
+    service: name=tomcat state=started
+  - name: Deploy the war file on tomcat server
+    get_url: 
+      url=https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+      dest=/usr/share/tomcat/webapps
+    notify: 
+      - Restart tomcat Server
+      - Print Deployment message
+  handlers:
+  - name: Print Deployment message
+    debug: msg="Deployment Complete"
+  - name: Restart tomcat Server
+    service: name=tomcat state=restarted
+
+--handlers allways exeutes at the end of the all the tasks
+--if you want handlers to be executed imediately then fulsh the handlers as below
 
 
+- name: Deploy war file on tomcat
+  hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+  - name: Install package tomcat on server
+    package: name=tomcat state=present
+  - name: Start tomcat Server
+    service: name=tomcat state=started
+  - name: Deploy the war file on tomcat server
+    get_url: 
+      url=https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+      dest=/usr/share/tomcat/webapps
+    notify: 
+      - Restart tomcat Server
+      - Print Deployment message
+  - meta: flush handlers
+  handlers:
+  - name: Print Deployment message
+    debug: msg="Deployment Complete"
+  - name: Restart tomcat Server
+    service: name=tomcat state=restarted
+
+ansible variables:
+
+- name: Deploy war file on tomcat
+  hosts: webserver
+  become: true
+  become_user: root
+  vars:
+   pkg_name: tomcat
+   url: https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+   dest: /usr/share/tomcat/webapps
+  tasks:
+  - name: Install package tomcat on server
+    package: name={{pkg_name}} state=present
+  - name: Start tomcat Server
+    service: name={{pkg_name}} state=started
+  - name: Deploy the war file on tomcat server
+    get_url: 
+      url={{url}}
+      dest={{dest}}
+    notify: 
+      - Restart tomcat Server
+      - Print Deployment message
+  handlers:
+  - name: Print Deployment message
+    debug: msg="Deployment Complete"
+  - name: Restart tomcat Server
+    service: name={{pkg_name}} state=restarted
+
+you can also write variables in a seperate file
+
+sudo vim variables.yml
+
+pkg_name: tomcat
+url: https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+dest: /usr/share/tomcat/webapps
+
+
+- name: Deploy war file on tomcat
+  hosts: webserver
+  become: true
+  become_user: root
+  vars_files:
+   - variables.yml
+  tasks:
+  - name: Install package tomcat on server
+    package: name={{pkg_name}} state=present
+  - name: Start tomcat Server
+    service: name={{pkg_name}} state=started
+  - name: Deploy the war file on tomcat server
+    get_url: 
+      url={{url}}
+      dest={{dest}}
+    notify: 
+      - Restart tomcat Server
+      - Print Deployment message
+  handlers:
+  - name: Print Deployment message
+    debug: msg="Deployment Complete"
+  - name: Restart tomcat Server
+    service: name={{pkg_name}} state=restarted
+
+to pass a variable value at runtime as below
+
+- name: Deploy war file on tomcat
+  hosts: webserver
+  become: true
+  become_user: root
+  var_files:
+   - variables.yml
+  tasks:
+  - name: Install package git on server
+    package: name={{pkg_name1}} state=present
+  - name: Install package tomcat on server
+    package: name={{pkg_name}} state=present
+  - name: Start tomcat Server
+    service: name={{pkg_name}} state=started
+  - name: Deploy the war file on tomcat server
+    get_url: 
+      url={{url}}
+      dest={{dest}}
+    notify: 
+      - Restart tomcat Server
+      - Print Deployment message
+  handlers:
+  - name: Print Deployment message
+    debug: msg="Deployment Complete"
+  - name: Restart tomcat Server
+    service: name={{pkg_name}} state=restarted
+
+ansible-playbook playbooktomcat.yml -extra-vars pkg_name1=git
+
+-- Jinja2 template is used to change the dynamic variables
+------------------------------------
+playbook for docker
+
+sudo vim playbookDocker.yml
+
+- name: Build Image and docker containers
+  hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+  - name: Install packages on host server
+    package: name={{item}} state=present
+    loop:
+     - git
+     - docker
+     - nano
+     - tree
+     - php
+
+ansible-playbook playbookDocker.yml 
+
+
+sudo vim playbookDocker.yml
+
+
+- name: Build Image and docker containers
+  hosts: webserver
+  become: true
+  become_user: root
+  tasks:
+  - name: Install packages on host server
+    package: name={{item}} state=present
+    loop:
+     - git
+     - docker
+  - name: Start docker service
+    service: name=docker state=started
+  - name: clone a repo on host server
+    git:
+     repo=https://github.com/Sonal0409/AnsibleDockerdemo.git
+     dest=/tmp/myrepo
+  - name: build the dockerfile
+    command: chdir=/tmp/myrepo docker build -t myimage:ansible . 
+
+
+ansible webserver -m command -a "sudo docker images"
+
+which ansible
+
+/usr/bin
+
+https://github.com/vjdgithub/JenkinsAnsibleDemo06March
+
+pipeline {
+    
+    tools {maven 'mymaven'}
+    
+    agent any 
+    
+    stages {
+        
+        stage ('Checkout code') {
+            
+            steps {
+                git branch: 'main', url: 'https://github.com/vjdgithub/JenkinsAnsibleDemo06March.git'
+            }
+        }
+        stage ('Execute Playbook-tomcat') {
+            
+            steps {
+                ansiblePlaybook credentialsId: 'ansiblecredentials', disableHostKeyChecking: true, installation: 'myansible', inventory: 'dev.inv', playbook: 'playbook1.yml', vaultTmpPath: ''
+            }
+            
+        }
+       
+    }
+}
 
 
 
